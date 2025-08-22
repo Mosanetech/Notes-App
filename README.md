@@ -29,3 +29,22 @@ pnpm dev
 # or
 bun dev
 
+
+### ⚠️ Alias Config Warning (JS vs TS)
+
+If you're using both JavaScript and TypeScript in the same project, make sure your alias paths are defined consistently across both `jsconfig.json` and `tsconfig.json`.
+
+We ran into an issue where aliases like `@/components` worked in `.js` files but failed in `.ts` files—turns out `tsconfig.json` was missing the `paths` config.
+
+#### ✅ Fix
+Update `tsconfig.json` like so:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
