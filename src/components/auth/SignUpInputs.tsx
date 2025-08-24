@@ -77,7 +77,7 @@ const handleSubmit = (e) => {
         </p>
       </div>
       <p className="text-sm text-center">
-        Already have an account? <Link href={'/sign-up'} className="text-blue-600">Sign in</Link>
+        Already have an account? <Link href={'/login'} className="text-blue-600">Sign in</Link>
       </p>
     </div>
     )

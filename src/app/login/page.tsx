@@ -1,47 +1,29 @@
-'use client'
-import React, { useState } from "react";
-import InputField from "@/components/InputField";
+import LoginInputs from "@/components/auth/LoginInputs";
+import { NextPage } from "next";
 
-const LoginPage: React.FC = () => {
-  const [form, setForm] = useState({ identifier: "", password: "" });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle login logic here
-  };
-
+const Login: NextPage = () => {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded shadow-md w-full max-w-sm"
-      >
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        <InputField
-          type="text"
-          value={form.identifier}
-          onChange={handleChange}
-          placeholder="Enter your email or phone"
-        />
-        <InputField
-          type="password"
-          value={form.password}
-          onChange={handleChange}
-          placeholder="Enter your password"
-        />
-        <button
-          type="submit"
-          className="w-full mt-6 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          Login
-        </button>
-      </form>
+    <div className="flex flex-col items-center justify-center px-4">
+      {/* Header Section */}
+      <div className="mb-8 text-center">
+        <h2>SchoolNotes</h2>
+        <p className="text-sm mt-2">
+          Login in to start sharing notes
+        </p>
+      </div>
+
+      {/* Form Section */}
+      <div className="p-6 rounded-md shadow-md max-w-md w-full bg-white space-y-4">
+        <h3 className="text-lg font-semibold text-center">Create your account</h3>
+        <p className="text-sm text-gray-500 text-center">
+          Start sharing your school notes today
+        </p>
+
+        <LoginInputs />
+      </div>
     </div>
   );
-};
+}
 
-export default LoginPage;
+export default Login;
