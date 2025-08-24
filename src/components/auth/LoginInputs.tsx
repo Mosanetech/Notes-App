@@ -53,7 +53,7 @@ const LoginInputs: NextPage = () => {
                 </p>
             </div>
             <p className="text-sm text-center">
-                Don't have an account? <Link href={'/signup'} className="text-blue-600">Sign up</Link>
+                Don&apos;t have an account? <Link href={'/signup'} className="text-blue-600">Sign up</Link>
             </p>
         </div>
     )
