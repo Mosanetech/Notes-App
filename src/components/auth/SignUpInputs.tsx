@@ -4,18 +4,31 @@ import { NextPage } from "next";
 import InputField from "../InputField";
 import { useState } from "react";
 import Link from "next/link";
+import PhoneInput from "./PhoneInput";
+import { ValidationResult } from "@/utils/validateInputs";
 
-const LoginInputs: NextPage = () => {
+const SignUpInputs: NextPage = () => {
   const[first_name, setFirst_name] = useState('');
   const [last_name, setLast_name] = useState('');
   const [emailorphone, setEmailorPhone] = useState('');
+  const [validation, setValidation] = useState<ValidationResult>({
+    isValid:false,
+    isEmail:false,
+    isPhone:false,
+    message:'',
+    formattedPhone:''
+  });
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) =>{
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-  console.log(`${first_name}, ${emailorphone}, ${last_name}, ${password}`)
+  if (!validation.isValid) {
+    alert(`validation: ${first_name}, ${emailorphone}, ${last_name}, ${password}`);
+    return;
   }
+};
+
 
   return(
     <div>
@@ -35,11 +48,11 @@ const LoginInputs: NextPage = () => {
           />
         </div>
         <div className="flex flex-col m-2 gap-4">
-            <InputField type="text"
-             placeholder="Email or phone"
-             value={emailorphone}
-             onChange={(e => setEmailorPhone(e.target.value))}
-             />
+            <PhoneInput 
+              value = {emailorphone}
+              onChange = {(e) => setEmailorPhone(e.target.value)}
+              setValidation={setValidation}
+            />
             <InputField
               type="password"
               placeholder="Password"
@@ -70,4 +83,4 @@ const LoginInputs: NextPage = () => {
     )
 }
 
-export default LoginInputs; 
+export default SignUpInputs; 

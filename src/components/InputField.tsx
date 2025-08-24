@@ -20,7 +20,8 @@ const InputField: React.FC<FieldInputProps> = ({
         placeholder={placeholder}
         className={`border-0 outline-1 rounded-sm px-1 outline-gray-300 bg-gray-100 ${className}`}
         value={value}
-        onChange={onChange}    
+        onChange={onChange}
+        required    
         />
     )
 }

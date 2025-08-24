@@ -48,3 +48,19 @@ Update `tsconfig.json` like so:
     }
   }
 }
+
+## 📱 Phone Number Verification
+
+This project uses `libphonenumber-js` to validate international phone numbers during signup. Users must enter a valid number with country code (e.g., `+265`, `+1`, `+44`) to proceed.
+
+### 🔧 How It Works
+
+**1. `utils/validatePhone.ts`**  
+Contains the core logic for validating phone numbers. It uses `libphonenumber-js` to parse and check if the number is valid.
+
+```ts
+import { isValidPhoneNumber } from 'libphonenumber-js';
+
+export const validatePhone = (input: string): boolean => {
+  return isValidPhoneNumber(input);
+};
