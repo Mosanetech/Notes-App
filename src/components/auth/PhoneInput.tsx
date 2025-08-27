@@ -13,21 +13,14 @@ interface PhoneInputProps {
   setValidation: React.Dispatch<React.SetStateAction<ValidationResult>>;
 }
 
-const PhoneInput: NextPage<PhoneInputProps> = ({value, onChange}) => {
-
-  const [validation, setValidation] = useState<ValidationResult>({
-    isValid: false,
-    isEmail: false,
-    isPhone: false,
-    message: '',
-    formattedPhone: ''
-  });
-
+const PhoneInput: NextPage<PhoneInputProps> = ({value, onChange, setValidation}) => {
   //Validate email or phone input
   useEffect(() => {
     const result = validateEmailOrPhone(value);
     setValidation(result);
-  }, [value]);
+  }, [value,setValidation]);
+
+  const validation = validateEmailOrPhone(value);
 
     return(
         <div>

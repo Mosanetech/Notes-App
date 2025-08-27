@@ -11,6 +11,8 @@ const SignUpInputs: NextPage = () => {
   const[first_name, setFirst_name] = useState('');
   const [last_name, setLast_name] = useState('');
   const [emailorphone, setEmailorPhone] = useState('');
+  const [username, setUsername] = useState('');
+  const [confirm_password, setConfirm_password] = useState('');
   const [validation, setValidation] = useState<ValidationResult>({
     isValid:false,
     isEmail:false,
@@ -20,13 +22,46 @@ const SignUpInputs: NextPage = () => {
   });
   const [password, setPassword] = useState('');
 
-const handleSubmit = (e) => {
+const handleSubmit = async (e:React.FormEvent) => {
   e.preventDefault();
 
-  if (!validation.isValid) {
-    alert(`validation: ${first_name}, ${emailorphone}, ${last_name}, ${password}`);
+  if(!validation.isValid) {
+    alert ('Please enter a valid email or phone number');
     return;
   }
+
+  const payload = {
+    username,
+    first_name,
+    last_name,
+    password,
+    confirm_password,
+    email: validation.isEmail ? emailorphone : null,
+    phone_number: validation.isPhone ? validation.formattedPhone || emailorphone : null
+  };
+
+  try{
+    const res = await fetch('https://notesdigitalbrainslab.onrender.com/api/users/register',{
+      method:'POST',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const data = await res.json();
+
+    if(res.ok){
+      console.log("signup successfully:",data)
+    }else{
+      console.log("Signup Failed:",data);
+      alert(data.detail || "Sign up failed. Please try again.")
+    }
+  }catch(error) {
+    console.log("Network error:",error)
+    alert("Network error. Please chech your connection.")
+  }
+
 };
 
 
@@ -48,6 +83,12 @@ const handleSubmit = (e) => {
           />
         </div>
         <div className="flex flex-col m-2 gap-4">
+            <InputField 
+              type="text"
+              placeholder="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
             <PhoneInput 
               value = {emailorphone}
               onChange = {(e) => setEmailorPhone(e.target.value)}
@@ -58,6 +99,12 @@ const handleSubmit = (e) => {
               placeholder="Password"
               value={password}
               onChange={(e => setPassword(e.target.value))}
+            />
+              <InputField
+              type="password"
+              placeholder="Confirm password"
+              value={confirm_password}
+              onChange={(e => setConfirm_password(e.target.value))}
             />
         </div>
         <div className="text-center">

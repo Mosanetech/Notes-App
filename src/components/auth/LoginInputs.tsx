@@ -1,6 +1,6 @@
 'use client'
 import { NextPage } from "next";
-import { useState } from "react";
+import React, { useState } from "react";
 import InputField from "../InputField";
 import { ValidationResult } from "@/utils/validateInputs";
 import PhoneInput from "./PhoneInput";
@@ -17,15 +17,48 @@ const LoginInputs: NextPage = () => {
         formattedPhone:''
     });
 
-    const handleSubmit = (e) =>{
-        e.preventDefault;
-        if(!validation.isValid){
-            alert(`Login as: ${emailorphone} password: ${password}`)
+  
+    const handleSubmit = async (e:React.FormEvent) =>{
+        e.preventDefault();
+
+        const payload = {
+        identifier: validation.isEmail
+            ? emailorphone
+            : validation.isPhone
+            ? validation.formattedPhone || emailorphone
+            : null,
+        password,
+        };
+
+
+        try{
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/login`,{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json()
+
+            if(res.ok){
+                console.log('Login Successful:',data);
+                localStorage.setItem('access_token',data.access);
+                localStorage.setItem('refresh_token',data.refresh);
+            }else{
+                console.log('Login failed:',data);
+                alert(data.detail || "Login failed. Please check yout credentials")
+            }
+        }catch(error){
+            console.log("Network error:", error);
+            alert("Network error. please try check your connection.")
         }
     }
+        
     return(
         <div>
-            <form action={handleSubmit} className="max-w-[400px] space-y-4 mb-2">
+            <form onSubmit={handleSubmit} className="max-w-[400px] space-y-4 mb-2">
                 <div className="flex flex-col gap-2 m-2">
                     <PhoneInput
                         value={emailorphone}

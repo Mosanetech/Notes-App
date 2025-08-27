@@ -2,17 +2,17 @@ import { NextPage } from "next";
 import Link from "next/link";
 
 const Header: NextPage = () =>{
-    const user = false;
+    const user = true;
     return(
         <div>
-            <div className="header-custom fixed w-full top-0 flex justify-between p-6 items-center">
+            <div className="header-custom fixed w-full top-0 flex justify-between p-6 items-center z-10">
                 <Link href={'/'} className="text-white text-xl md:text-2xl">SchoolNotes</Link>
             {/*Left navigation */}
             <div className="flex gap-2">
                 <Link href={'/'} className="text-white">Home</Link>
                 <Link href={'/notes'} className="text-white">Notes</Link>
                 {
-                    user? <Link href={'/profile'} className="text-white">Profile</Link>
+                    user? <Link href={'/profile/12'} className="text-white">Profile</Link>
                     : <Link href={'/signup'} className="text-white">sign up</Link>
                 }
             </div>
