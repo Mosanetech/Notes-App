@@ -6,6 +6,10 @@ import { useState } from "react";
 import Link from "next/link";
 import PhoneInput from "./PhoneInput";
 import { ValidationResult } from "@/utils/validateInputs";
+import { useRouter } from "next/navigation";
+import { setSourceMapsSupport } from "module";
+
+type Message = {text:string, type:'success' | 'error'};
 
 const SignUpInputs: NextPage = () => {
   const[first_name, setFirst_name] = useState('');
@@ -21,12 +25,18 @@ const SignUpInputs: NextPage = () => {
     formattedPhone:''
   });
   const [password, setPassword] = useState('');
+  const router = useRouter();
+  const [message, setMessage] = useState<Message | null>(null);
+  const [loading, setloading] = useState<boolean>(false);
 
 const handleSubmit = async (e:React.FormEvent) => {
   e.preventDefault();
+  setloading(true);
+  setMessage(null);
 
   if(!validation.isValid) {
-    alert ('Please enter a valid email or phone number');
+    setMessage({text:'Please enter a valid email or phone number', type:'error'});
+    setloading(false);
     return;
   }
 
@@ -41,7 +51,7 @@ const handleSubmit = async (e:React.FormEvent) => {
   };
 
   try{
-    const res = await fetch('https://notesdigitalbrainslab.onrender.com/api/users/register',{
+    const res = await fetch('/api/auth/signup',{
       method:'POST',
       headers: {
         'Content-Type':'application/json'
@@ -52,14 +62,21 @@ const handleSubmit = async (e:React.FormEvent) => {
     const data = await res.json();
 
     if(res.ok){
-      console.log("signup successfully:",data)
+      setloading(false);
+      setMessage({text:'Sign up successful! Redirecting...',type:'success'})
+      router.push('/login');
     }else{
-      console.log("Signup Failed:",data);
-      alert(data.detail || "Sign up failed. Please try again.")
+      if(process.env.NODE_ENV !== 'production'){
+        console.log("Signup Failed:",data);
+      }
+      setMessage({text:data.detail|| "Sign up failed. Please try again.", type:'error'});
     }
+    setloading(false);
   }catch(error) {
-    console.log("Network error:",error)
-    alert("Network error. Please chech your connection.")
+    if(process.env.NODE_ENV !== 'production'){
+      console.log("Network error:",error)
+    }
+    setMessage({text:"Network error. Please check your connection.", type:'error'});
   }
 
 };
@@ -107,9 +124,24 @@ const handleSubmit = async (e:React.FormEvent) => {
               onChange={(e => setConfirm_password(e.target.value))}
             />
         </div>
+        
+        {/*Inline Message*/}
+        {message && (
+            <div className={`p-2 rounded-md text-center font-medium ${message.type === 'success' ?'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {message.text}
+            </div>
+        )
+        }
+
         <div className="text-center">
-          <button type="submit" className="btn-custom mb-2">Create Account</button>
+          <button 
+          type="submit" 
+          disabled={loading}
+          className="btn-custom mb-2">
+            {loading ?'Submitting....':'Create Account'}
+          </button>
         </div>
+
       </form>
       <div className="mb-2 boder border-b-1 border-b-gray-600 pb-2">
         <p className="text-sm mb-2 bg-blue-100 p-2 opacity-90 rounded-xl">

@@ -3,12 +3,13 @@ import Image from "next/image";
 import ProfileComponent from "@/components/profile/notesComponent";
 
 interface Props {
-    params: {id: string};
+    params: Promise<{id: string}>;
 }
 
 const Profile: NextPage <Props> = async ({params}) => {
+    const {id} = await params;
     //fetch user data from RandomUser API
-    const res = await fetch(`https://randomuser.me/api/?seed=${params.id}&results=1`, {
+    const res = await fetch(`https://randomuser.me/api/?seed=${id}&results=1`, {
         cache: 'no-store',
     });
     if(!res.ok){
@@ -25,6 +26,7 @@ const Profile: NextPage <Props> = async ({params}) => {
             width={100}
             height={100}
             className="rounded-full"
+            priority
             />
             
             <h2>{user.name.first} {user.name.last}</h2>

@@ -5,10 +5,13 @@ import InputField from "../InputField";
 import { ValidationResult } from "@/utils/validateInputs";
 import PhoneInput from "./PhoneInput";
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+
+type Message = {text:string, type: 'success' | 'error'};
 
 const LoginInputs: NextPage = () => {
-    const [password, setPassword] = useState('');
-    const [emailorphone, setEmailorPhone] = useState('');
+    const [password, setPassword] = useState<string>('');
+    const [emailorphone, setEmailorPhone] = useState<string>('');
     const [validation, setValidation] = useState<ValidationResult>({
         isValid:false,
         isEmail: false,
@@ -16,10 +19,14 @@ const LoginInputs: NextPage = () => {
         message:'',
         formattedPhone:''
     });
+    const router = useRouter();
+    const [message, setMessage] = useState<Message | null>(null);
+    const [loading, setloading] = useState<boolean>(false);
 
-  
     const handleSubmit = async (e:React.FormEvent) =>{
         e.preventDefault();
+        setloading(true);
+        setMessage(null); //reset previous message
 
         const payload = {
         identifier: validation.isEmail
@@ -30,9 +37,14 @@ const LoginInputs: NextPage = () => {
         password,
         };
 
+        if(!payload.identifier || !password){
+            setMessage({text:"Please enter valid credentials.", type:'error'})
+            setloading(false);
+            return;
+        }
 
         try{
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/login`,{
+            const res = await fetch(`/api/auth/login`,{
                 method:'POST',
                 headers:{
                     'Content-Type':'application/json'
@@ -42,17 +54,18 @@ const LoginInputs: NextPage = () => {
 
             const data = await res.json()
 
-            if(res.ok){
-                console.log('Login Successful:',data);
-                localStorage.setItem('access_token',data.access);
-                localStorage.setItem('refresh_token',data.refresh);
+            if (res.ok) {
+                setMessage({text:"Login successful! Redirecting...", type:'success'});
+                setloading(false);
+                router.push(`/profile/${data.user?.id || 12}`);
             }else{
-                console.log('Login failed:',data);
-                alert(data.detail || "Login failed. Please check yout credentials")
+                setMessage({text:data.non_field_errors?.[0] || "Login failed. Please check yout credentials", type:'error'});
+                setloading(false)
             }
         }catch(error){
             console.log("Network error:", error);
-            alert("Network error. please try check your connection.")
+            setMessage({text:"Network error. please try check your connection.",type:'error'})
+            setloading(false);
         }
     }
         
@@ -72,8 +85,18 @@ const LoginInputs: NextPage = () => {
                         onChange={(e => setPassword(e.target.value))}
                     />
                 </div>
+
+                {/*Inline Message*/}
+                {message && (
+                    <div className={`p-2 rounded-md text-center font-medium ${message.type === 'success' ?'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                        {message.text}
+                    </div>
+                )
+                }
                 <div className="text-center">
-                 <button type="submit" className="btn-custom">Login</button>
+                 <button type="submit" className="btn-custom" disabled={loading}>
+                    {loading?'submitting...' :'login'}
+                </button>
                 </div>
             </form>
             <div className="mb-2 boder border-b-1 border-b-gray-600 pb-2">
