@@ -1,7 +1,7 @@
 'use client'
 import { NextPage } from "next";
 import React, { useState } from "react";
-import InputField from "../InputField";
+import InputField from "../ui/InputField";
 import { ValidationResult } from "@/utils/validateInputs";
 import PhoneInput from "./PhoneInput";
 import Link from 'next/link'
@@ -109,7 +109,7 @@ const LoginInputs: NextPage = () => {
                 </p>
             </div>
             <p className="text-sm text-center">
-                Don&apos;t have an account? <Link href={'/signup'} className="text-blue-600">Sign up</Link>
+                Don&apos;t have an account? <Link href={'/auth/signup'} className="text-blue-600">Sign up</Link>
             </p>
         </div>
     )

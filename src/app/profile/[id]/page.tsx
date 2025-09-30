@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import ProfileComponent from "@/components/profile/notesComponent";
+import ProfileComponent from "@/components/notes/profile/notesComponent";
 
 interface Props {
     params: Promise<{id: string}>;

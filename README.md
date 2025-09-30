@@ -9,6 +9,30 @@ A school notes sharing platform built with **Next.js** (frontend) and **Django +
 - 🔗 Backend API powered by Django and PostgreSQL
 - 🤝 Ready for collaboration and contributions
 
+## Project structure
+````
+school-notes/
+├── src/
+│   ├── app/
+│   │   ├── (auth)/           # Auth Route groups
+|   |   |   |——login/         #login page
+|   |   |   |——signup/        # Register Page
+│   │   ├── globals.css
+│   │   ├── layout.ts         # Root layout
+│   │   ├── page.tsx          # Home page
+|   |   |—— not-found.tsx     # 404 Page Not Found 
+│   │   └── loading.tsx       # Loading UI
+│   ├── components/
+│   │   ├── ui/               # Reusable UI components
+│   │   ├── layout/           # Layout components
+│   │   ├── notes/            # Note-specific components
+│   │   └── common/           # Shared components
+│   ├── lib/                  # Utilities, configs
+│   ├── hooks/                # Custom React hooks
+│   └── types/                # TypeScript definitions
+├── public/                   # Static assets
+└── package.json
+````
 ## Getting Started
 
 ### Frontend (Next.js)
