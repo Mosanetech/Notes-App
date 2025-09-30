@@ -3,7 +3,7 @@
 import { NextPage } from "next"
 import { useEffect, useState } from "react"
 import { Check, X} from "lucide-react"
-import InputField from "../InputField"
+import InputField from "../ui/InputField"
 import { validateEmailOrPhone, ValidationResult } from "@/utils/validateInputs"
 
 

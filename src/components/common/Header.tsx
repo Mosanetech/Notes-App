@@ -8,10 +8,10 @@ const Header: NextPage = async () =>{
     return(
         <div>
             <div className="header-custom fixed w-full top-0 flex justify-between p-6 items-center z-10">
-                <Link href={'/'} className="text-white text-xl md:text-2xl">SchoolNotes</Link>
+                <Link href={'/public'} className="text-white text-xl md:text-2xl">SchoolNotes</Link>
             {/* Left navigation */}
             <div className="flex gap-2">
-            <Link href="/" className="text-white">Home</Link>
+            <Link href="/public" className="text-white">Home</Link>
             <Link href="/notes" className="text-white">Notes</Link>
 
             {user ? (
@@ -19,7 +19,7 @@ const Header: NextPage = async () =>{
                 Profile
                 </Link>
             ) : (
-                <Link href="/signup" className="text-white">
+                <Link href="/auth/signup" className="text-white">
                 Sign up
                 </Link>
             )}

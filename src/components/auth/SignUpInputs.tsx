@@ -1,13 +1,12 @@
 'use client'
 
 import { NextPage } from "next";
-import InputField from "../InputField";
+import InputField from "../ui/InputField";
 import { useState } from "react";
 import Link from "next/link";
 import PhoneInput from "./PhoneInput";
 import { ValidationResult } from "@/utils/validateInputs";
 import { useRouter } from "next/navigation";
-import { setSourceMapsSupport } from "module";
 
 type Message = {text:string, type:'success' | 'error'};
 
@@ -156,7 +155,7 @@ const handleSubmit = async (e:React.FormEvent) => {
         </p>
       </div>
       <p className="text-sm text-center">
-        Already have an account? <Link href={'/login'} className="text-blue-600">Sign in</Link>
+        Already have an account? <Link href={'/auth/login'} className="text-blue-600">Sign in</Link>
       </p>
     </div>
     )
