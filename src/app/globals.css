@@ -19,6 +19,9 @@
         --accent-primary: #10B981;
         --accent-hover: #059669;
         --highlight: #3B82F6;
+        --secondary-bg: #F8FAF8;
+        --border-color: #E5E7EB;
+
 
         /* Background variants */
         --bg-highlight: var(--highlight);       /* Blue background */
@@ -32,7 +35,7 @@ body {
   font-family: var(--font-sans), serif; /* Default font */
 }
 
-/*styling headings*/
+
 @layer base {
     h1 {
         @apply text-4xl font-bold tracking-tight text-[var(--text-secondary)];
@@ -63,7 +66,7 @@ body {
     }
 
     * {
-        border-color: var(--accent-primary);
+        border-color: var(--border-color);
     }
     a{
         @apply hover:text-[var(--highlight)];
@@ -100,8 +103,26 @@ body {
 }
 
 
-/*Secondary background*/
-.secondary-bg {
-    background-color: #F8FAF8;
-}
 
+
+
+@layer utility {
+    /* Text colors */
+    .accent-txt { color: var(--accent-primary); }
+    .highlight-txt { color: var(--highlight); }
+
+    /* Background colors */
+    .bg-accent { background-color: var(--accent-primary); }
+    .bg-highlight { background-color: var(--highlight); }
+    .bg-secondary { background-color:var(--secondary-bg); } /*Secondary background color*/
+
+    /* Border colors */
+    .border-accent { border-color: var(--accent-primary); }
+    .border-highlight { border-color: var(--highlight); }
+
+
+    /* Hover states */
+    .hover-accent:hover { color: var(--accent-primary); }
+    .hover-highlight:hover { color: var(--highlight); }
+
+}
