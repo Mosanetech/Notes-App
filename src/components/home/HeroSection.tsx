@@ -12,7 +12,7 @@ const HeroSection: NextPage = () => {
                     <h2>
                         Find and Share Study Notes Easily
                     </h2>
-                    <p className={'text-center text-md'}>
+                    <p className={'text-center text-lg'}>
                         Access thousands of PDF study notes uploaded by students. Share your knowledge and help others succeed in their academic journey.
                     </p>
 
