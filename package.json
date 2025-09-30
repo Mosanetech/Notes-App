@@ -19,9 +19,10 @@
     "path": "^0.12.7",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-spinners": "^0.17.0",
     "swr": "^2.3.6",
     "tailwind-merge": "^3.3.1",
-    "vercel": "^32.7.2"
+    "vercel": "^48.1.6"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
