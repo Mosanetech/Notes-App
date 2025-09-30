@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import {Metadata} from "next";
 import HeroSection from "@/components/home/HeroSection";
+import CategorySection from "@/components/home/CategorySection";
 
 export const metadata: Metadata = {
   title: 'Welcome SchoolNotes',
@@ -9,8 +10,9 @@ export const metadata: Metadata = {
 
 const Home: NextPage = () => {
   return(
-    <div className="text-center">
+    <div className="text-center flex flex-col gap-10">
         <HeroSection />
+        <CategorySection />
     </div>
   )
 }
