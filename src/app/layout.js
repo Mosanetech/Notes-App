@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${roboto.variable} ${inter.variable}`}>
       <body className="font-sans min-h-screen flex flex-col">
         <Header />
-        <div className='mt-16 flex-grow'>
+        <div className='mt-16 pb-10 flex-grow'>
             {children}
         </div>
       <Footer />
