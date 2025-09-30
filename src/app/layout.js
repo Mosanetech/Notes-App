@@ -1,6 +1,7 @@
 import { Roboto, Inter } from 'next/font/google';
 import "./globals.css";
 import Header from '@/components/common/Header';
+import Footer from "@/components/common/Footer";
 
 
 const roboto = Roboto({
@@ -22,11 +23,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${roboto.variable} ${inter.variable}`}>
-      <body className="font-sans">
+      <body className="font-sans min-h-screen flex flex-col">
         <Header />
-        <div className='mt-16 m-auto p-2 max-w-screen-sm md:max-w-screen-md lg:max-w-[960px] xl:max-w-screen-lg mx-auto'>
-`        {children}`
+        <div className='mt-16 flex-grow'>
+            {children}
         </div>
+      <Footer />
       </body>
     </html>
   );
