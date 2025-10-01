@@ -56,10 +56,12 @@ const CategorySection: NextPage = () => {
     ];
 
     return (
-        <div>
-            <div>
+        <div className={'px-4'}>
+            <div className={'flex flex-col gap-4 text-center'}>
                 <h3>Popular Study Categories</h3>
-                <p className={'sm:text-lg text-sm max-w-[500px] md:max-w-[600px] mx-auto'}>Explore notes from various academic disciplines and find exactly what you need to excel in your studies.</p>
+                <p className={'sm:text-lg text-sm max-w-[500px] md:max-w-[600px] mx-auto'}>
+                    Explore notes from various academic disciplines and find exactly what you need to excel in your studies.
+                </p>
             </div>
             {/*Categories Grid*/}
             <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 max-w-[1200px] mx-auto px-4'}>
